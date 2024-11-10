@@ -1,0 +1,47 @@
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex: 1 0;
+	margin: 0;
+}
+
+img {
+	height: 200px;
+}
+
+img, 
+.logo {
+	height: 75px;
+}
+
+.header {
+	height: 100px;
+	background-color: #eee;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.hero {
+	display: flex;
+	
+}
+
+.introduction {
+	display: flex;
+	flex-direction: column;
+}
+
+.characters {
+	display: flex;
+}
+
+.footer {
+	height: 100px;
+	background-color: #eee;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
