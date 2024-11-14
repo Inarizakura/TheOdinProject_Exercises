@@ -1,6 +1,6 @@
 * {
 	margin: 0;
-	font: roboto;
+	font-family: 'roboto';
 }
 
 body {
@@ -13,7 +13,7 @@ body {
 }
 
 .heroimg {
-	height: 400px;
+	height: 350px;
 	border: 5px solid #E34234;
 	border-radius: 15px;
 }
@@ -54,12 +54,10 @@ body {
 	flex-wrap: wrap;
 }
 
-.text h1 {
+.heromain  {
 	color: #212738;
-}
-
-.text p {
-	color: #6A7B76;
+	font-size: 48px;
+	font-weight: 900;
 }
 
 .introduction {
@@ -73,11 +71,17 @@ body {
 	gap: 50px;
 }
 
+.introtitle {
+	font-size: 36px;
+	font-weight: 500;
+	color: #212738;
+}
+
 .characters {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	align-items: center;
+	align-items: baseline;
 	gap: 50px;
 }
 
@@ -109,10 +113,15 @@ body {
 }
 
 .about {
-	padding: 150px 150px;
+	padding: 150px 300px;
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
+	gap: 20px;
+}
+
+.signoff {
+	align-self: flex-end;
 }
 
 .contact {
@@ -126,20 +135,27 @@ body {
 	background-color: #6A7B76;
 	display: flex;
 	justify-content: space-between;
-	
+	border: 5px solid transparent;
+	border-radius: 10px;
 	flex-grow: 1;
 }
 
 .contact div div {
 	display: flex;
 	flex-direction: column;
+	flex-grow: 2;
+}
+
+.contactmain {
+	font-weight: bolder;
+}
+
+.contact p {
+	color: #C6ECAE;
 }
 
 .contact button {
-	background-color: #6A7B76;
-	color: #C6ECAE;
-	border: 2px solid #C6ECAE;
-	border-radius: 5px;
+	margin-right: 100px;
 	align-self: center;
 }
 
@@ -152,6 +168,11 @@ button {
 	border-radius: 5px;
 }
 a {
-	color: #212738;
+	color: #6A7B76;
 	text-decoration: none;
+}
+
+p {
+	font-size: 18px;
+	color: #6A7B76;
 }
