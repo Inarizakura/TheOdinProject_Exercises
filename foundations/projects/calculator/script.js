@@ -1,49 +1,11 @@
-function add(a, b) {
-	return a + b;
-}
-
-function subtract(a, b) {
-	return a - b
-}
-
-function multiply(a, b) {
-	return a * b;
-}
-
-function divide(a, b) {
-	return a / b;
-}
-
-function operate(a, b, op) {
-	switch (op) {
-		case '+':
-			add(a, b);
-			break;
-		case '-':
-			subtract(a, b);
-			break;
-		case '*':
-			multiply(a, b);
-			break;
-		case '/':
-			divide(a, b);
-			break;
-	}
-}
-
-function displayEquation(a, b, op) {
-	if (!op) {
-		display.textContent = a.toString();
-	} else {
-		display.textContent = a.toString() + op + b.toString();
-	}
-}
-
 let res = 0;
 let num = 0;
 let op = '';
-let opFlag = 0;
-let decFlag = 0;
+let resFlag = false;
+let numFlag = false;
+let decFlag = false;
+let errFlag = false;
+let negFlag = false;
 
 let calculator = document.getElementById("calc-body");
 
@@ -53,41 +15,200 @@ let display = document.getElementById("calc-display");
 // Buttons
 let calc_btn = document.getElementById("calc-numpad");
 let clear = document.getElementById("clear");
-// let btn_num1 = document.getElementById("num1");
-// let btn_num2 = document.getElementById("num2");
-// let btn_num3 = document.getElementById("num3");
-// let btn_num4 = document.getElementById("num4");
-// let btn_num5 = document.getElementById("num5");
-// let btn_num6 = document.getElementById("num6");
-// let btn_num7 = document.getElementById("num7");
-// let btn_num8 = document.getElementById("num8");
-// let btn_num9 = document.getElementById("num9");
-// let btn_num0 = document.getElementById("num0");
-// let btn_opDivide = document.getElementById("opDivide");
-// let btn_opMultiply = document.getElementById("opMultiply");
-// let btn_opMinus = document.getElementById("opMinus");
-// let btn_opPlus = document.getElementById("opPlus");
-// let btn_opDec = document.getElementById("opDec");
-// let btn_opEqual = document.getElementById("opEqual");
 
+// Operations Functions
+function add() {
+	return res + num;
+}
+
+function subtract() {
+	return res - num;
+}
+
+function multiply() {
+	return res * num;
+}
+
+function divide() {
+	return res / num;
+}
+
+function operate() {
+	switch (op) {
+		case '+':
+			res = add(res, num);
+			break;
+		case '-':
+			res = subtract(res, num);
+			break;
+		case '*':
+			res = multiply(res, num);
+			break;
+		case '/':
+			res = divide(res, num);
+			break;
+	}
+	num = 0;
+	op = '';
+	resFlag = true;
+	numFlag = false;
+	decFlag = false;
+}
+
+function displayEquation() {
+	if (!op) {
+		if (!decFlag || (decFlag && (res != Math.floor(res)))) {
+			display.textContent = res.toString();
+		} else {
+			display.textContent = res.toString() + '.';
+		}
+	} else if (op && !numFlag) {
+		display.textContent = res.toString() + op;
+	} else {
+		if (!decFlag || (decFlag && (num != Math.floor(num)))) {
+			display.textContent = res.toString() + op + num.toString();
+		} else {
+			display.textContent = res.toString() + op + num.toString() + '.';
+		}
+	}
+}
+
+function reset() {
+	res = 0;
+	num = 0;
+	op = '';
+	resFlag = false;
+	numFlag = false;
+	decFlag = false;
+}
+
+function getOperator(operator) {
+	decFlag = false;
+	if (!op || (op && !numFlag)) {
+		op = operator;
+	} else {
+		operate(res, num, op);
+		num = +'';
+		op = operator;
+		numFlag = false;
+	}
+}
+
+function getNum(digit) {
+	if (op) {
+		numFlag = true;
+		if (!decFlag) {
+			num = (num * 10) + digit;
+		} else {
+			if (num === Math.floor(num)) {
+				const temp = num.toString() + '.' + digit.toString();
+				num = +temp;
+			} else {
+				const temp = num.toString() + digit.toString();
+				num = +temp;
+			}
+		}
+	} else {
+		if (resFlag) {
+			res = digit;
+			resFlag = false;
+		} else {
+			if (!decFlag) {
+				res = (res * 10) + digit;
+			} else {
+				if (res === Math.floor(res)) {
+					const temp = res.toString() + '.' + digit.toString();
+					res = +temp;
+				} else {
+					const temp = res.toString() + digit.toString();
+					res = +temp;
+				}
+			}
+		}
+	}
+}
+
+function addDec(val) {
+	console.log(val);
+	const temp = val.toString() + '.';
+	console.log(val);
+	val = +temp;
+	console.log(val);
+
+}
 
 calc_btn.addEventListener("click", (e) => {
 	let target = e.target;
 
 	switch (target.textContent) {
 		case '1':
-			res = (res * 10) + +target.textContent;
+			getNum(+target.textContent);
+			break;
+		case '2':
+			getNum(+target.textContent);
+			break;
+		case '3':
+			getNum(+target.textContent);
+			break;
+		case '4':
+			getNum(+target.textContent);
+			break;
+		case '5':
+			getNum(+target.textContent);
+			break;
+		case '6':
+			getNum(+target.textContent);
+			break;
+		case '7':
+			getNum(+target.textContent);
+			break;
+		case '8':
+			getNum(+target.textContent);
+			break;
+		case '9':
+			getNum(+target.textContent);
+			break;
+		case '0':
+			getNum(+target.textContent);
+			break;
+		case '/':
+			getOperator('/');
+			break;
+		case '*':
+			getOperator('*');
+			break;
+		case '-':
+			getOperator('-');
+			break;
+		case '+':
+			getOperator('+');
+			break;
+		case '.':
+			if (!decFlag) {
+				decFlag = true;
+			}
+			break;
+		case '=':
+			if (num === 0 && op === '/') {
+				display.textContent = "Infinity, division by Zero is impossible!";
+				reset();
+				errFlag = true;
+			} else {
+				operate();
+			}
 			break;
 	}
-	displayEquation(res, num, op);
+	if (!errFlag) {
+		displayEquation();
+	} else {
+		errFlag = false;
+	}
 });
 
 // Click listener for clear
 clear.addEventListener("click", (e) => {
-	res = 0;
-	num = 0;
-	op = '';
-	displayEquation(res, num, op);
+	reset();
+	displayEquation();
 });
 
-displayEquation(res, num, op);
+displayEquation();
