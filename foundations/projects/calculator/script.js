@@ -5,11 +5,9 @@ let resFlag = false;
 let numFlag = false;
 let decFlag = false;
 let errFlag = false;
-let negFlag = false;
-
-let calculator = document.getElementById("calc-body");
 
 // Display
+let history = document.getElementById("history");
 let display = document.getElementById("calc-display");
 
 // Buttons
@@ -34,6 +32,10 @@ function divide() {
 }
 
 function operate() {
+	if (!numFlag) {
+		return;
+	}
+	history.textContent = res.toString() + op + num.toString() + '=';
 	switch (op) {
 		case '+':
 			res = add(res, num);
@@ -55,6 +57,7 @@ function operate() {
 	decFlag = false;
 }
 
+// Display equation
 function displayEquation() {
 	if (!op) {
 		if (!decFlag || (decFlag && (res != Math.floor(res)))) {
@@ -63,7 +66,7 @@ function displayEquation() {
 			display.textContent = res.toString() + '.';
 		}
 	} else if (op && !numFlag) {
-		display.textContent = res.toString() + op;
+			display.textContent = res.toString() + op;
 	} else {
 		if (!decFlag || (decFlag && (num != Math.floor(num)))) {
 			display.textContent = res.toString() + op + num.toString();
@@ -73,6 +76,7 @@ function displayEquation() {
 	}
 }
 
+// Reset all variables
 function reset() {
 	res = 0;
 	num = 0;
@@ -81,6 +85,13 @@ function reset() {
 	numFlag = false;
 	decFlag = false;
 }
+
+// Click listener for clear
+clear.addEventListener("click", (e) => {
+	history.textContent = "";
+	reset();
+	displayEquation();
+});
 
 function getOperator(operator) {
 	decFlag = false;
@@ -110,6 +121,7 @@ function getNum(digit) {
 		}
 	} else {
 		if (resFlag) {
+			history.textContent = res;
 			res = digit;
 			resFlag = false;
 		} else {
@@ -126,15 +138,6 @@ function getNum(digit) {
 			}
 		}
 	}
-}
-
-function addDec(val) {
-	console.log(val);
-	const temp = val.toString() + '.';
-	console.log(val);
-	val = +temp;
-	console.log(val);
-
 }
 
 calc_btn.addEventListener("click", (e) => {
@@ -203,12 +206,6 @@ calc_btn.addEventListener("click", (e) => {
 	} else {
 		errFlag = false;
 	}
-});
-
-// Click listener for clear
-clear.addEventListener("click", (e) => {
-	reset();
-	displayEquation();
 });
 
 displayEquation();
